@@ -1,7 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import "../CSS/Registration_style.css";
+import LogInPage from "./LogInPage";
+import { Link } from 'react-router-dom';
+
+
 
 function RegistrationPage() {
   const [id, setId] = useState("");
@@ -9,37 +13,44 @@ function RegistrationPage() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  
+  // useEffect(() =>{
+  //   (async()=> await Load())()
+  //  },[]);
 
-  function handlePhoneNumberChange(event) {
-    setPhoneNumber(event.target.value);
-  }
-
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
-  async function handleSubmit(event) {
+//   async function Load(){
+// const result =await axios.get
+// //(
+//   // "http://localhost:8080/api/v1/getAll");
+//   setUserName(result.data);
+//   console.log(result.data);
+  
+ 
+// }
+  async function handelSubmit(event) {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:8080/save", {
-        id: id,
-        userName: userName,
-        email: email,
-        phoneNumber: phoneNumber,
-        password: password,
-      });
+      // await axios.post("http://localhost:8080/api/v1/save", 
+      // {
+      //   id: id,
+      //   userName: userName,
+      //   email: email,
+      //   phoneNumber: phoneNumber,
+      //   password: password,
+      // });
       alert("User Registation Successfully");
-      setId("");
-      setUserName("");
-      setEmail("");
-      setPhoneNumber("");
-      setPassword("");
+      // setId("");
+      // setUserName("");
+      // setEmail("");
+      // setPhoneNumber("");
+      // setPassword("");
     } catch (err) {
       alert("User Registation Failed");
     }
   }
   return (
     <div className="register-container">
-      <form className="register-form">
+      <form onSubmit={handelSubmit}>
         <br></br>
         <h1>Registration</h1>
         <p>Fill in the Information Below</p>
@@ -75,16 +86,22 @@ function RegistrationPage() {
           type="text"
           name="phoneNumber"
           placeholder="phone number"
-          onChange={handlePhoneNumberChange}
+          onChange={(event) => {
+            setPhoneNumber(event.target.value);
+          }}
         />
         <input
           type="text"
           name="password"
           placeholder="password"
-          onChange={handlePasswordChange}
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
         />
 
-        <button type="submit" name="singup" onClick={handleSubmit}>Register</button>
+        <button type="submit">Register</button>
+        
+        <button type="submit"><Link to="login">LogIn</Link></button>
       </form>
     </div>
   );
